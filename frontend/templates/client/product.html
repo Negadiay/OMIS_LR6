@@ -3,17 +3,14 @@
 <a href="/client/home" class="back-btn">Back</a>
 
 <div class="product-layout">
-    <!-- Миниатюры (Слева) -->
     <div class="thumbs-col">
         <div class="thumb" onclick="setMain('{{ product.image_url }}')" style="background-image: url('{{ product.image_url }}')"></div>
         <div class="thumb" onclick="setMain('https://placehold.co/600/e2e8f0/1e293b?text=Side')" style="background-image: url('https://placehold.co/600/e2e8f0/1e293b?text=Side')"></div>
         <div class="thumb" onclick="setMain('https://placehold.co/600/cbd5e1/1e293b?text=Back')" style="background-image: url('https://placehold.co/600/cbd5e1/1e293b?text=Back')"></div>
     </div>
 
-    <!-- Главное фото (Центр) -->
     <div class="main-img" id="mainImg" style="background-image: url('{{ product.image_url }}')"></div>
 
-    <!-- Инфо (Справа) -->
     <div class="prod-info">
         <div style="text-transform: uppercase; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">{{ product.category }}</div>
         <h1 style="font-size: 2.2rem; margin: 10px 0;">{{ product.name }}</h1>
@@ -51,4 +48,5 @@
 <script>
     function setMain(url) { document.getElementById('mainImg').style.backgroundImage = `url('${url}')`; }
 </script>
+
 {% endblock %}
