@@ -5,7 +5,6 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, DateTime, JSO
 from sqlalchemy.orm import relationship
 from backend.database import Base
 
-# --- ENUMS ---
 class UserRole(enum.Enum):
     CLIENT = "client"
     MANAGER = "manager"
@@ -23,7 +22,6 @@ class OrderStatus(enum.Enum):
     COMPLETED = "completed"
     CANCELLED = "cancelled"
 
-# --- USERS ---
 class User(Base):
     __tablename__ = 'users'
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -59,7 +57,6 @@ class Admin(User):
     id = Column(String, ForeignKey('users.id'), primary_key=True)
     __mapper_args__ = {'polymorphic_identity': 'admin'}
 
-# --- DATA ---
 class Profile(Base):
     __tablename__ = 'profiles'
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -81,7 +78,6 @@ class Product(Base):
     
     manager = relationship("Manager", back_populates="products")
     interactions = relationship("Interaction", back_populates="product", cascade="all, delete-orphan")
-    # В Product связь называется 'cart_items', поэтому в CartItem нужно ссылаться на это имя
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
     feedbacks = relationship("Feedback", back_populates="product", cascade="all, delete-orphan")
 
@@ -108,7 +104,6 @@ class Feedback(Base):
     client = relationship("Client", back_populates="feedbacks")
     product = relationship("Product", back_populates="feedbacks")
 
-# --- COMMERCE ---
 class Cart(Base):
     __tablename__ = 'carts'
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -124,7 +119,6 @@ class CartItem(Base):
     quantity = Column(Integer, default=1)
     
     cart = relationship("Cart", back_populates="items")
-    # ИСПРАВЛЕНИЕ: back_populates указывает на атрибут 'cart_items' в классе Product
     product = relationship("Product", back_populates="cart_items")
 
 class Order(Base):
@@ -139,7 +133,6 @@ class Order(Base):
 
     client = relationship("Client", back_populates="orders")
 
-# --- SYSTEM ---
 class Report(Base):
     __tablename__ = 'reports'
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -159,4 +152,5 @@ class AppConfig(Base):
     __tablename__ = 'app_config'
     id = Column(Integer, primary_key=True, autoincrement=True)
     key = Column(String, unique=True, index=True)
+
     value = Column(JSON)
