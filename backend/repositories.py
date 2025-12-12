@@ -3,7 +3,6 @@ from typing import Type, TypeVar, List, Optional
 from backend.database import Base
 from backend.models import User, Client, Product, Interaction, Report, Cart
 
-# ИСПРАВЛЕНИЕ: Убрали bound=Base, чтобы IDE не ругалась на динамический тип
 T = TypeVar('T')
 
 class BaseRepository:
@@ -46,4 +45,5 @@ class ReportRepository(BaseRepository):
 class CartRepository(BaseRepository):
     def __init__(self, db: Session): super().__init__(db, Cart)
     def get_by_client(self, client_id: str):
+
         return self.db.query(Cart).filter(Cart.client_id == client_id).first()
