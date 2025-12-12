@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Добавляем локальные стили, чтобы убрать логику из атрибута style -->
+<style>
+    .status-btn {
+        padding: 6px 16px;
+        font-size: 0.9rem;
+        border-radius: 20px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    /* Классы состояний */
+    .status-active {
+        background-color: #10b981; /* Зеленый */
+    }
+    .status-disabled {
+        background-color: #ef4444; /* Красный */
+    }
+</style>
+
+<div class="center-box" style="max-width: 600px;">
+    <h1 style="margin-bottom: 30px;">Admin Panel</h1>
+    
+    <h3 style="text-align: left; margin-bottom: 15px; color: var(--text-secondary);">System Modules</h3>
+    
+    <div class="card" style="padding: 0;">
+        {% for m in modules %}
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border);">
+            <span style="font-weight: 600; font-size: 1.1rem;">{{ m.name }}</span>
+            
+            <form action="/admin/module/toggle/{{ m.id }}" method="post">
+                <!-- 
+                    ИСПРАВЛЕНИЕ: 
+                    Вместо style="..." используем переключение классов.
+                    Это убирает ошибки валидации CSS в редакторе.
+                -->
+                <button class="status-btn {% if m.is_active %}status-active{% else %}status-disabled{% endif %}">
+                    {% if m.is_active %}Active{% else %}Disabled{% endif %}
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div style="padding: 20px; text-align: center;">No modules found.</div>
+        {% endfor %}
+    </div>
+    
+    <br><br>
+    <h3 style="text-align: left; margin-bottom: 15px; color: var(--text-secondary);">Algorithm Config (Weights)</h3>
+    
+    <div class="card" style="padding: 20px;">
+        <p style="font-size: 0.9rem; color: #666; margin-top: 0;">
+            Adjust the impact of user actions on recommendations. <br>
+            Higher value = more important for the algorithm.
+        </p>
+        
+        <form action="/admin/config/update" method="post">
+            <textarea name="weights" 
+                      style="width: 100%; height: 150px; font-family: monospace; border: 1px solid var(--border); border-radius: 8px; padding: 10px;"
+            >{{ weights_json }}</textarea>
+            
+            <button class="btn btn-full" style="margin-top: 15px;">Save Configuration</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
