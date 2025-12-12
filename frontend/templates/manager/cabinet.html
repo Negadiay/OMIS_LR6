@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px;">
+    <h1 style="text-align: center; margin-bottom: 10px;">Manager Dashboard</h1>
+    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">
+        Organization: <b>{{ user.organization_name }}</b>
+    </p>
+
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+        <!-- Карточка 1: Товары -->
+        <a href="/manager/products" style="text-decoration: none; color: inherit;">
+            <div class="card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box; transition: transform 0.2s;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">📦</div>
+                <h3 style="margin: 0 0 10px 0;">Products & Analytics</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">Select products to generate sales reports.</p>
+                <span class="btn">Go to Products</span>
+            </div>
+        </a>
+        
+        <!-- Карточка 2: Отчеты -->
+        <a href="/manager/reports" style="text-decoration: none; color: inherit;">
+            <div class="card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box; transition: transform 0.2s;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">📊</div>
+                <h3 style="margin: 0 0 10px 0;">Report History</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">View previously generated reports.</p>
+                <span class="btn btn-secondary">View Reports</span>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

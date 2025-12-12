@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="max-width: 800px;">
+    <div style="text-align: right; margin-bottom: 10px;">
+        <a href="/manager/reports" style="color: var(--text-secondary); text-decoration: none;">Back</a>
+    </div>
+    
+    <h1 style="text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">REPORT</h1>
+
+    <div class="card" style="padding: 0; overflow: hidden; border: 2px solid var(--border);">
+        <table style="width: 100%; border-collapse: collapse; text-align: center;">
+            <thead>
+                <tr style="background: #9ca3af; color: white;">
+                    <th style="padding: 15px; width: 40%;">Product</th>
+                    <th style="padding: 15px; width: 20%; border-left: 1px solid #d1d5db;">Sold</th>
+                    <th style="padding: 15px; width: 40%; border-left: 1px solid #d1d5db;">Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in report.content %}
+                <tr style="background: #f3f4f6; border-bottom: 1px solid #d1d5db;">
+                    <td style="padding: 15px; font-weight: 500;">{{ row.product }}</td>
+                    <td style="padding: 15px; border-left: 1px solid #d1d5db;">{{ row.sold }}</td>
+                    <td style="padding: 15px; border-left: 1px solid #d1d5db;">{{ row.revenue }} BYN</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="3" style="padding: 30px;">No data available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
