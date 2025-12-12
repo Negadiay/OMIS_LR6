@@ -13,7 +13,6 @@
         <div class="header-left">
             {% if user and user.role.value == 'client' %}
                 <a href="/client/home" class="logo">Market</a>
-                <!-- ЗАМЕНА: Ссылка на корзину вместо каталога -->
                 <a href="/client/cart" class="header-icon" title="Cart">
                     <i class="fas fa-shopping-cart"></i> Cart
                 </a>
@@ -50,4 +49,5 @@
         {% block content %}{% endblock %}
     </div>
 </body>
+
 </html>
