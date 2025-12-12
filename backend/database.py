@@ -4,7 +4,7 @@ from backend.config import settings
 
 engine = create_engine(
     settings.DATABASE_URL, 
-    connect_args={"check_same_thread": False} # Обязательно для SQLite
+    connect_args={"check_same_thread": False} 
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -15,4 +15,5 @@ def get_db():
     try:
         yield db
     finally:
+
         db.close()
