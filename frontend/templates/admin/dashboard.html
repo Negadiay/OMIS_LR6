@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Добавляем локальные стили, чтобы убрать логику из атрибута style -->
 <style>
     .status-btn {
         padding: 6px 16px;
@@ -12,12 +11,11 @@
         cursor: pointer;
         transition: background 0.2s;
     }
-    /* Классы состояний */
     .status-active {
-        background-color: #10b981; /* Зеленый */
+        background-color: #10b981; 
     }
     .status-disabled {
-        background-color: #ef4444; /* Красный */
+        background-color: #ef4444; 
     }
 </style>
 
@@ -32,11 +30,7 @@
             <span style="font-weight: 600; font-size: 1.1rem;">{{ m.name }}</span>
             
             <form action="/admin/module/toggle/{{ m.id }}" method="post">
-                <!-- 
-                    ИСПРАВЛЕНИЕ: 
-                    Вместо style="..." используем переключение классов.
-                    Это убирает ошибки валидации CSS в редакторе.
-                -->
+                
                 <button class="status-btn {% if m.is_active %}status-active{% else %}status-disabled{% endif %}">
                     {% if m.is_active %}Active{% else %}Disabled{% endif %}
                 </button>
@@ -65,4 +59,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}
