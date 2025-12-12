@@ -17,13 +17,11 @@ app.include_router(router)
 def seed():
     db = SessionLocal()
     try:
-        # 1. Admin
         if not db.query(Admin).filter(Admin.username == "admin@market.com").first():
             db.add(Admin(username="admin@market.com", password_hash="admin", role=UserRole.ADMIN))
             db.commit()
             print(">>> Admin created.")
         
-        # 2. Main Manager (Owner of seeded products)
         main_manager = db.query(Manager).filter(Manager.username == "manager@market.com").first()
         if not main_manager:
             main_manager = Manager(
@@ -39,7 +37,6 @@ def seed():
         if not db.query(SystemModule).first():
             db.add(SystemModule(name="RecEngine", is_active=True))
 
-        # 3. Products linked ONLY to Main Manager
         if db.query(Product).count() == 0:
             print(">>> Seeding 60 products...")
             categories = ["Creativity", "Entertainment", "Food", "Games", "Pets", "Beauty"]
@@ -53,7 +50,7 @@ def seed():
                     sku=f"SKU-{1000+i}",
                     description=f"Item {i}. Excellent choice for {cat} lovers.",
                     image_url=f"https://placehold.co/400x400/{color}/ffffff?text={cat}+{i}",
-                    manager_id=main_manager.id # ВАЖНО: Привязка
+                    manager_id=main_manager.id 
                 )
                 db.add(p)
             db.commit()
@@ -61,4 +58,5 @@ def seed():
         db.close()
 
 if __name__ == "__main__":
+
     uvicorn.run("backend.main:app", host="127.0.0.1", port=8000, reload=True)
