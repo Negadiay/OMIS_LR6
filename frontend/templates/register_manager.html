@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-box" style="max-width: 500px;">
+    <a href="/register" style="float: right; text-decoration: none; color: var(--text-secondary);">Back</a>
+    <h2 style="text-align: center; margin-bottom: 30px;">Partner Registration</h2>
+    
+    <form action="/register/manager" method="post">
+        <div class="form-group">
+            <label>Organization Name</label>
+            <input type="text" name="organization" placeholder="e.g. Global Tech LLC" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label>Manager Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Work Email</label>
+            <input type="email" name="username" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <button class="btn btn-full" style="margin-top: 10px;">Register Partner</button>
+    </form>
+</div>
+{% endblock %}
