@@ -6,7 +6,6 @@
 </div>
 
 <div class="cart-layout">
-    <!-- СЛЕВА: Итого -->
     <div class="card" style="padding: 30px; height: fit-content;">
         <h2 style="margin-top: 0;">Total</h2>
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
@@ -26,7 +25,6 @@
         <a href="/client/payment" class="btn btn-full" {% if not items %}style="pointer-events: none; opacity: 0.5;"{% endif %}>Place an Order</a>
     </div>
 
-    <!-- СПРАВА: Товары -->
     <div class="grid-products" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
         {% for item in items %}
         <div class="card">
@@ -53,4 +51,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
