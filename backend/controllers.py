@@ -38,7 +38,6 @@ class AuthController(BaseController):
             return resp
         return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid login or password"})
 
-# --- AUTH & ROOT ---
 @router.get("/", response_class=HTMLResponse)
 async def root(): return RedirectResponse("/login")
 
@@ -76,13 +75,11 @@ async def reg_manager_page(request: Request): return templates.TemplateResponse(
 
 @router.post("/register/manager")
 async def register_manager(request: Request, username: str = Form(...), password: str = Form(...), organization: str = Form(...), name: str = Form(None), gender: str = Form(None), db: Session = Depends(get_db)):
-    # Исправлена логика регистрации менеджера
     mgr = Manager(
         username=username, 
         password_hash=password, 
         role=UserRole.MANAGER, 
         organization_name=organization
-        # Поля name и gender можно сохранить, если расширить модель, но пока сохраняем основные
     )
     db.add(mgr)
     db.commit()
@@ -90,7 +87,6 @@ async def register_manager(request: Request, username: str = Form(...), password
     resp.set_cookie("user_id", mgr.id)
     return resp
 
-# --- CLIENT ---
 @router.get("/client/home", response_class=HTMLResponse)
 async def client_home(request: Request, search: str = "", db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
@@ -200,7 +196,7 @@ async def orders(request: Request, db: Session = Depends(get_db)):
     
     user_orders = db.query(backend.models.Order).filter(backend.models.Order.client_id == user.id).order_by(backend.models.Order.created_at.desc()).all()
     
-    TIME_STEP = 5 # секунд
+    TIME_STEP = 5
     
     current_time = datetime.utcnow()
     
@@ -223,7 +219,6 @@ async def orders(request: Request, db: Session = Depends(get_db)):
 
     return templates.TemplateResponse("client/orders.html", {"request": request, "user": user, "orders": user_orders})
 
-# --- MANAGER ---
 @router.get("/manager/cabinet")
 async def mgr_cab(request: Request, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
@@ -234,11 +229,9 @@ async def mgr_cab(request: Request, db: Session = Depends(get_db)):
 async def mgr_products(request: Request, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
     if not user: return RedirectResponse("/login")
-    # ИСПРАВЛЕНИЕ: Менеджер видит ТОЛЬКО свои товары
     products = db.query(Product).filter(Product.manager_id == user.id).all()
     return templates.TemplateResponse("manager/products_list.html", {"request": request, "products": products, "user": user})
 
-# CRUD ТОВАРОВ
 @router.get("/manager/products/add", response_class=HTMLResponse)
 async def add_product_page(request: Request, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
@@ -263,7 +256,6 @@ async def add_product(
 @router.get("/manager/products/edit/{pid}", response_class=HTMLResponse)
 async def edit_product_page(request: Request, pid: str, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
-    # Проверка на владение
     product = db.query(Product).filter(Product.id == pid, Product.manager_id == user.id).first()
     if not product: return RedirectResponse("/manager/products")
     return templates.TemplateResponse("manager/product_form.html", {"request": request, "user": user, "product": product})
@@ -298,7 +290,6 @@ async def delete_product(request: Request, pid: str, db: Session = Depends(get_d
 @router.post("/manager/reports/create")
 async def create_rep(request: Request, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
-    # Генерируем только по товарам ЭТОГО менеджера
     report = ManagerService(db).generate_report(user.id)
     return RedirectResponse(f"/manager/report/{report.id}", status_code=303)
 
@@ -323,14 +314,12 @@ async def delete_rep(rid: str, db: Session = Depends(get_db)):
         db.commit()
     return RedirectResponse("/manager/reports", status_code=303)
 
-# --- ADMIN ---
 @router.get("/admin/panel")
 async def admin_pan(request: Request, db: Session = Depends(get_db)):
     user = BaseController(db).get_current_user(request)
     if not user: return RedirectResponse("/login")
     mods = db.query(SystemModule).all()
     
-    # Получаем текущие настройки или дефолтные
     config_obj = db.query(AppConfig).filter(AppConfig.key == "algo_weights").first()
     if config_obj:
         current_weights = json.dumps(config_obj.value, indent=4)
@@ -346,7 +335,7 @@ async def admin_pan(request: Request, db: Session = Depends(get_db)):
         "request": request, 
         "user": user, 
         "modules": mods,
-        "weights_json": current_weights # Передаем в шаблон
+        "weights_json": current_weights 
     })
 
 @router.post("/admin/config/update")
@@ -374,4 +363,5 @@ async def toggle_module(mod_id: int, db: Session = Depends(get_db)):
     if module:
         module.is_active = not module.is_active
         db.commit()
+
     return RedirectResponse("/admin/panel", status_code=303)
