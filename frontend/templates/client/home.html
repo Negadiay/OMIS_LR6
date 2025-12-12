@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="home-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3 class="sidebar-title">Categories</h3>
+        <a href="/client/category/Creativity" class="cat-link">🎨 Creativity</a>
+        <a href="/client/category/Entertainment" class="cat-link">🎬 Entertainment</a>
+        <a href="/client/category/Food" class="cat-link">🍔 Food</a>
+        <a href="/client/category/Games" class="cat-link">🎮 Games</a>
+        <a href="/client/category/Pets" class="cat-link">🐱 Pets</a>
+        <a href="/client/category/Beauty" class="cat-link">💄 Beauty</a>
+    </div>
+
+    <!-- Content -->
+    <div style="flex-grow: 1;">
+        <h1 style="margin-top: 0;">Personal Recommendations</h1>
+        <div class="grid-products">
+            {% for p in products %}
+            <div class="card">
+                <a href="/client/product/{{ p.id }}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1;">
+                    <div class="card-img" style="background-image: url('{{ p.image_url }}');"></div>
+                    <div class="card-body">
+                        <div class="card-title">{{ p.name }}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">{{ p.category }}</div>
+                        <div style="margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                            <div class="card-price">{{ p.price }} BYN</div>
+                            <span class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">View</span>
+                        </div>
+                    </div>
+                </a>
+                <form action="/client/cart/add/{{ p.id }}" method="post" style="padding: 0 20px 20px;">
+                    <button class="btn btn-full">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

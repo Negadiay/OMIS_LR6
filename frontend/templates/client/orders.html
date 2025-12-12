@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <a href="/client/profile" class="back-btn">Back to Profile</a>
+    <h1>Order History</h1>
+
+    {% for order in orders %}
+    <div class="card" style="margin-bottom: 20px;">
+        <div class="card-body">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px;">
+                <div>
+                    <div style="font-weight: 700; font-size: 1.1rem;">Order #{{ order.id[:8] }}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+                </div>
+                <span style="background: #d1fae5; color: #065f46; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; height: fit-content;">
+                    {{ order.status.value }}
+                </span>
+            </div>
+            
+            {% for item in order.items_snapshot %}
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>{{ item.product_name }} <span style="color: var(--text-secondary);">x{{ item.quantity }}</span></span>
+                <b>{{ item.price }} BYN</b>
+            </div>
+            {% endfor %}
+            
+            <div style="text-align: right; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border);">
+                <span style="color: var(--text-secondary);">Total:</span>
+                <span style="font-weight: 800; font-size: 1.3rem; color: var(--primary); margin-left: 10px;">{{ order.total_amount }} BYN</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+        <p>No orders yet.</p>
+        <a href="/client/home" class="btn">Start Shopping</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="payment-layout">
+    <div style="grid-column: 1 / -1; position: relative;">
+        <h1 style="text-align: center; margin-bottom: 40px;">Checkout</h1>
+        <a href="/client/cart" class="top-right-link" style="position: absolute; right: 0; top: 10px;">Back to Cart</a>
+    </div>
+
+    <!-- СЛЕВА: Карта (Белая плашка) -->
+    <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border);">
+        <h2 style="margin-top: 0; margin-bottom: 20px;">Payment Details</h2>
+        
+        <form action="/client/checkout" method="post">
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" placeholder="0000 0000 0000 0000" pattern="\d{16}" maxlength="16" required 
+                       style="font-family: monospace; letter-spacing: 2px; font-size: 1.1rem;">
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="password" placeholder="123" maxlength="3" required>
+                </div>
+            </div>
+            
+            <button class="btn btn-full" style="margin-top: 20px; padding: 15px; font-size: 1.1rem;">Pay {{ total }} BYN</button>
+        </form>
+    </div>
+
+    <!-- СПРАВА: Саммари (Белая плашка) -->
+    <div style="background: white; padding: 30px; border-radius: 16px; border: 1px solid var(--border); height: fit-content;">
+        <h3 style="margin-top: 0;">Order Summary</h3>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span style="color: var(--text-secondary);">Subtotal</span>
+            <b>{{ subtotal }} BYN</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span style="color: var(--text-secondary);">Delivery</span>
+            <b>{{ delivery }} BYN</b>
+        </div>
+        
+        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; color: var(--text-main);">
+            <span>Total</span>
+            <span>{{ total }} BYN</span>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center; color: #cbd5e1; font-size: 3rem;">
+            <i class="fab fa-cc-visa" style="margin-right: 15px;"></i>
+            <i class="fab fa-cc-mastercard"></i>
+        </div>
+    </div>
+</div>
+{% endblock %}

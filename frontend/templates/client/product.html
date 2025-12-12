@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/client/home" class="back-btn">Back</a>
+
+<div class="product-layout">
+    <!-- Миниатюры (Слева) -->
+    <div class="thumbs-col">
+        <div class="thumb" onclick="setMain('{{ product.image_url }}')" style="background-image: url('{{ product.image_url }}')"></div>
+        <div class="thumb" onclick="setMain('https://placehold.co/600/e2e8f0/1e293b?text=Side')" style="background-image: url('https://placehold.co/600/e2e8f0/1e293b?text=Side')"></div>
+        <div class="thumb" onclick="setMain('https://placehold.co/600/cbd5e1/1e293b?text=Back')" style="background-image: url('https://placehold.co/600/cbd5e1/1e293b?text=Back')"></div>
+    </div>
+
+    <!-- Главное фото (Центр) -->
+    <div class="main-img" id="mainImg" style="background-image: url('{{ product.image_url }}')"></div>
+
+    <!-- Инфо (Справа) -->
+    <div class="prod-info">
+        <div style="text-transform: uppercase; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px;">{{ product.category }}</div>
+        <h1 style="font-size: 2.2rem; margin: 10px 0;">{{ product.name }}</h1>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 20px;">{{ product.price }} BYN</div>
+        
+        <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
+            {{ product.description }}
+        </p>
+        
+        <form action="/client/cart/add/{{ product.id }}" method="post">
+            <button class="btn btn-full" style="font-size: 1.1rem; padding: 15px;">Add to Cart</button>
+        </form>
+    </div>
+</div>
+
+<h3 style="margin-top: 50px;">Similar Products</h3>
+{% if similar %}
+<div class="grid-products" style="grid-template-columns: repeat(4, 1fr);">
+    {% for s in similar %}
+    <div class="card">
+        <a href="/client/product/{{ s.id }}" style="text-decoration: none; color: inherit;">
+            <div class="card-img" style="background-image: url('{{ s.image_url }}'); height: 180px;"></div>
+            <div class="card-body">
+                <div class="card-title" style="font-size: 1rem;">{{ s.name }}</div>
+                <div class="card-price" style="font-size: 1rem;">{{ s.price }} BYN</div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p style="color: var(--text-secondary);">No similar products found.</p>
+{% endif %}
+
+<script>
+    function setMain(url) { document.getElementById('mainImg').style.backgroundImage = `url('${url}')`; }
+</script>
+{% endblock %}

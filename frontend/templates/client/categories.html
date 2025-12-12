@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="margin-bottom: 30px;">Catalog Categories</h1>
+<div class="grid-products">
+    {% for cat, count in categories.items() %}
+    <a href="/client/category/{{ cat }}" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 3rem; text-align: center; justify-content: center; height: 100%;">
+            <h2 style="color: var(--primary); margin: 0;">{{ cat }}</h2>
+            <p style="color: var(--text-secondary);">{{ count }} items</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

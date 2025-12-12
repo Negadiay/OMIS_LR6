@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
+    <h1 style="margin: 0;">Shopping Cart</h1>
+    <a href="/client/home" class="btn btn-secondary">Back to Shopping</a>
+</div>
+
+<div class="cart-layout">
+    <!-- СЛЕВА: Итого -->
+    <div class="card" style="padding: 30px; height: fit-content;">
+        <h2 style="margin-top: 0;">Total</h2>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span>Full amount</span> <span>{{ subtotal }} BYN</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span>Discount</span> <span>-{{ discount }} BYN</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span>Delivery</span> <span>{{ delivery }} BYN</span>
+        </div>
+        <hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; margin-bottom: 30px;">
+            <span>Total</span> <span>{{ total }} BYN</span>
+        </div>
+        
+        <a href="/client/payment" class="btn btn-full" {% if not items %}style="pointer-events: none; opacity: 0.5;"{% endif %}>Place an Order</a>
+    </div>
+
+    <!-- СПРАВА: Товары -->
+    <div class="grid-products" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+        {% for item in items %}
+        <div class="card">
+            <div class="card-img" style="background-image: url('{{ item.product.image_url }}'); height: 150px;"></div>
+            <div class="card-body" style="text-align: center;">
+                <div style="font-weight: 600; margin-bottom: 5px;">{{ item.product.name }}</div>
+                <div style="color: var(--text-secondary); margin-bottom: 10px;">{{ item.product.price }} BYN</div>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; background: #f3f4f6; padding: 5px; border-radius: 8px;">
+                    <form action="/client/cart/update/{{ item.id }}" method="post">
+                        <input type="hidden" name="action" value="decrease">
+                        <button class="btn btn-secondary" style="width: 30px; height: 30px; padding: 0;">-</button>
+                    </form>
+                    <span style="font-weight: bold;">{{ item.quantity }}</span>
+                    <form action="/client/cart/update/{{ item.id }}" method="post">
+                        <input type="hidden" name="action" value="increase">
+                        <button class="btn btn-secondary" style="width: 30px; height: 30px; padding: 0;">+</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>Basket is empty.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
