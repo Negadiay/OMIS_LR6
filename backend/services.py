@@ -1,4 +1,3 @@
-# ... (RecommendationService и CartService без изменений, код ниже) ...
 from sqlalchemy.orm import Session
 from backend.repositories import ProductRepository, InteractionRepository, CartRepository, ReportRepository
 from backend.strategies import MLStrategy, StatisticalStrategy
@@ -74,13 +73,11 @@ class ManagerService:
         self.interaction_repo = InteractionRepository(db)
 
     def generate_report(self, manager_id: str):
-        # Собираем статистику по ВСЕМ покупкам (PURCHASE)
         purchases = [i for i in self.interaction_repo.get_all() if i.type == ActionType.PURCHASE]
         stats = {}
         
         for p in purchases:
             if not p.product: continue
-            # Если нужно фильтровать только товары этого менеджера:
             if p.product.manager_id != manager_id and p.product.manager_id is not None:
                 continue
 
@@ -92,4 +89,5 @@ class ManagerService:
         content = [{"product": k, **v} for k, v in stats.items()]
         # Если пусто - все равно создаем
         report = Report(name=f"Report {len(self.report_repo.get_all())+1}", manager_id=manager_id, content=content)
+
         return self.report_repo.save(report)
