@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- Используем тот же класс home-layout для идентичной сетки -->
 <div class="home-layout">
     
-    <!-- 1. САЙДБАР (Точно такой же, как на главной) -->
     <div class="sidebar">
         <h3 class="sidebar-title">Categories</h3>
         <a href="/client/category/Creativity" class="cat-link">🎨 Creativity</a>
@@ -14,11 +12,9 @@
         <a href="/client/category/Beauty" class="cat-link">💄 Beauty</a>
     </div>
 
-    <!-- 2. КОНТЕНТ (Точно такая же сетка товаров) -->
     <div style="flex-grow: 1;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h1 style="margin: 0;">{{ category_name }}</h1>
-            <!-- Кнопка назад -->
             <a href="/client/home" class="btn btn-secondary">Back to All</a>
         </div>
 
@@ -26,7 +22,6 @@
             {% for p in products %}
             <div class="card" id="product-{{ p.id }}"> 
                 <a href="/client/product/{{ p.id }}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1;">
-                    <!-- Картинка -->
                     <div class="card-img" style="background-image: url('{{ p.image_url }}');"></div>
                     
                     <div class="card-body">
@@ -48,4 +43,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
