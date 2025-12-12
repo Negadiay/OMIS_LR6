@@ -30,7 +30,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- HEADER --- */
 .header {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
@@ -45,13 +44,11 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .header-left { display: flex; align-items: center; gap: 24px; width: 250px; }
-/* Центр расширен для поиска */
 .header-center { flex-grow: 1; display: flex; justify-content: center; padding: 0 20px; }
 .header-right { display: flex; align-items: center; gap: 24px; width: 250px; justify-content: flex-end; }
 
 .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
 
-/* Иконка в хедере (Корзина) */
 .header-icon { 
     font-size: 1.25rem; color: var(--text-secondary); 
     text-decoration: none; transition: 0.2s; 
@@ -60,7 +57,6 @@ body {
 }
 .header-icon:hover { color: var(--primary); background: #f1f5f9; }
 
-/* ПОИСК: Сделан шире (600px) */
 .search-input { 
     width: 100%; max-width: 600px; padding: 12px 20px; 
     border: 1px solid var(--border); border-radius: 99px; 
@@ -77,7 +73,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* --- COMMON LAYOUT --- */
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -99,7 +94,6 @@ a .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 h1, h2, h3 { margin-top: 0; color: var(--text-main); }
 h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
 
-/* --- FORMS & AUTH --- */
 .auth-container {
     max-width: 420px; 
     margin: 80px auto;
@@ -134,7 +128,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); 
 }
 
-/* --- BUTTONS --- */
 .btn {
     background: var(--primary); 
     color: white;
@@ -168,7 +161,6 @@ input:focus, select:focus, textarea:focus {
     display: flex;
 }
 
-/* --- HOME LAYOUT --- */
 .home-layout { display: grid; grid-template-columns: 260px 1fr; gap: 40px; align-items: start; }
 
 .sidebar { background: var(--bg-card); border-radius: 16px; padding: 20px 0; border: 1px solid var(--border); position: sticky; top: 100px; }
@@ -182,7 +174,6 @@ input:focus, select:focus, textarea:focus {
 }
 .cat-link:hover { background: #f8fafc; color: var(--primary); border-left-color: var(--primary); }
 
-/* --- GRID PRODUCTS --- */
 .grid-products { 
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
@@ -199,7 +190,6 @@ input:focus, select:focus, textarea:focus {
 .card-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; line-height: 1.4; }
 .card-price { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
 
-/* --- PRODUCT PAGE --- */
 .product-layout { 
     display: grid; grid-template-columns: 80px 1fr 1fr; 
     gap: 40px; background: var(--bg-card); padding: 40px; 
@@ -216,14 +206,11 @@ input:focus, select:focus, textarea:focus {
 }
 .prod-info { display: flex; flex-direction: column; justify-content: center; }
 
-/* --- CART & PAYMENT --- */
 .cart-layout { display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start; }
 .payment-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; max-width: 1000px; margin: 0 auto; }
 
-/* --- PROFILE (Обновленная сетка для исправления наложений) --- */
 .profile-layout { 
     display: grid; 
-    /* Основной контент (форма) и правая колонка (действия) */
     grid-template-columns: 1fr 280px; 
     gap: 40px; 
     align-items: start; 
@@ -238,7 +225,6 @@ input:focus, select:focus, textarea:focus {
     background: #f1f5f9; padding: 8px 12px; border-radius: 6px;
 }
 
-/* --- TABLES (Manager) --- */
 table { width: 100%; border-collapse: separate; border-spacing: 0; }
 th { text-align: left; padding: 16px; background: #f8fafc; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--border); }
 td { padding: 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
@@ -247,4 +233,5 @@ tr:last-child td { border-bottom: none; }
 .center-box {
     max-width: 600px; margin: 40px auto; background: var(--bg-card);
     padding: 40px; border-radius: 16px; border: 1px solid var(--border);
+
 }
